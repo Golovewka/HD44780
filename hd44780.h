@@ -1,5 +1,15 @@
-#ifdef HD44780_H_
+#ifndef HD44780_H_
 #define HD44780_H_
+
+    #define STATUS_IDLE    0x00
+    #define STATUS_OK      0x01
+    #define STATUS_ERROR   0x02
+    #define STATUS_BUSY    0x03
+    #define STATUS_TIMEOUT 0x04
+    
+    #warning "Change the values 'pin_t' and 'port_t' according to the system you are using"
+    typedef uint8_t pin_t; 
+    typedef PORT_t port_t;
 
     #include <stdint.h>
 
@@ -30,7 +40,7 @@
     class hd44780
     {
         private:
-            
+
             uint8_t clear_display;
             uint8_t return_home;
             uint8_t entry_mode_set;
@@ -42,7 +52,33 @@
 
         public:
 
-            uint8_t pin_init (pin_t hd44780_pin, port_t host_port, pin_t host_pin);
+            port_t *en_port;
+            pin_t en_pin;
+            port_t *rw_port;
+            pin_t rw_pin;
+            port_t *rs_port;
+            pin_t rs_pin;
+            port_t *d0_port;
+            pin_t d0_pin;
+            port_t *d1_port;
+            pin_t d1_pin;
+            port_t *d2_port;
+            pin_t d2_pin;
+            port_t *d3_port;
+            pin_t d3_pin;
+            port_t *d4_pin;
+            pin_t d4_pin;
+            port_t *d5_port;
+            pin_t d5_pin;
+            port_t *d6_port;
+            pin_t d6_pin;
+            port_t *d7_port;
+            pin_t d7_pin;
+
+            uint8_t timer_us(uint16_t time);
+            uint8_t timer_ms(uint16_t time);
+            uint8_t write_pin (port_t &port, pin_t pin);
+            uint8_t init_pin (port_t &hd44780_port, pin_t hd44780_pin, port_t &port, pin_t pin);
             uint8_t write_port (uint8_t value);
             uint8_t write_instruction (uint8_t instruction);
             uint8_t read_port (void);
@@ -62,5 +98,4 @@
 
     };
     
-
 #endif // HD44780_H_
