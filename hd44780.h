@@ -78,6 +78,8 @@
             uint8_t timer_us(uint16_t time);
             uint8_t timer_ms(uint16_t time);
             uint8_t write_pin (port_t &port, pin_t pin);
+            uint8_t read_pin (port_t &port, pin_t pin);
+            uint8_t switch_pin_mode(port_t &port, pin_t pin, uint8_t mode);
             uint8_t init_pin (port_t &hd44780_port, pin_t hd44780_pin, port_t &port, pin_t pin);
             uint8_t write_port (uint8_t value);
             uint8_t write_instruction (uint8_t instruction);
@@ -97,5 +99,5 @@
             uint8_t print_text (char *text);
 
     };
-    
+
 #endif // HD44780_H_
