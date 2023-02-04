@@ -60,11 +60,43 @@ uint8_t hd44780::timer_ms(uint16_t time)
  * @retval STATUS_OK
  * @retvak STATUS_ERROR
  */
-uint8_t hd44780::write_pin(port_t &port, pin_t pin_t)
+uint8_t hd44780::write_pin(port_t &port, pin_t pin)
 {
 
     // Далее необходимо расположить реализацию функции записи в пин
     
+}
+
+/*
+ * @brief Функция чтения значения на пине
+ *
+ * @param port наименование порта
+ * @param pin номер пина
+ * 
+ * @return значение на пине (бит маску)
+ */
+uint8_t hd44780::read_pin(port_t &port, pin_t pin)
+{
+
+	// Далее необходимо расположить реализацию функции чтения пина
+
+}
+
+/*
+ * @brief Функция смены режима работы пина, вход->выход и наоборот
+ *
+ * @param port наименование порта
+ * @param pin номер пина
+ * @param mode режим работы (0 - вход, 1 - выход)
+ * 
+ * @return статус выполнения операции
+ * @retval STATUS_OK
+ */
+uint8_t hd44780::switch_pin_mode(port_t &port, pin_t pin, uint8_t mode)
+{
+
+	// Далее необходимо расположить реализацию функции
+
 }
 
 /*
@@ -197,5 +229,72 @@ uint8_t hd44780::read_port(void)
 	switch_pin_mode(*d7_port,d7_pin, 1);
 			
 	return(value);
+
+}
+
+/*
+ * @brief Функция установки курсора на экране
+ *
+ * @param roll номер строки
+ * @param column номер столбца
+ * 
+ * @return статус операции
+ * @retval STATUS_OK
+ * @retval STATUS_IDLE
+ * @retval STATUS_ERROR
+ */
+uint8_t hd44780::set_cursor(uint8_t roll, uint8_t column)
+{
+
+	if (roll == 0)
+	{
+		
+		write_instruction(0x80 | (column + ROLL0_ADDR));
+		while(read_port() & 0x80);
+		
+	}
+	else
+	{
+		
+		write_instruction(0x80 | (column + ROLL1_ADDR));
+		while(read_port() & 0x80);
+		
+	}
+
+}
+
+/*
+ * @brief Функция инициализации дисплея
+ */
+uint8_t hd44780::init (void)
+{
+
+	uint8_t status = STATUS_IDLE;
+	
+	_delay_ms(15);
+	function_set = FUNCTION_SET_INTERFACE_DATA_LENGHT_8_BIT;
+	write_instruction(function_set);
+	timer_ms(5);
+	write_instruction(function_set);
+	timer_us(100);
+	write_instruction(function_set);
+	timer_ms(1);
+	function_set = FUNCTION_SET_DISPLAY_LINE_2_LINE | FUNCTION_SET_CHARACTERS_FONT_5X10 | FUNCTION_SET_INTERFACE_DATA_LENGHT_8_BIT;
+	write_instruction(function_set);
+	while(read_port() & 0x80);
+	display_control = DISPLAY_CONTROL_DISPLAY_ENABLE | DISPLAY_CONTROL_CURSOR_BLINK_ENABLE;
+	write_instruction(display_control);
+	while(read_port() & 0x80);
+	write_cmd(CLEAR_DISPLAY_CLEAR_DISPLAY);
+	while(read_port() & 0x80);
+	entry_mode_set = ENTRY_MODE_SET_CURSOR_MOVE_DIRECTION_INCREMENT;
+	write_instruction(entry_mode_set);
+	display_shift = DISPLAY_SHIFT_SHIFT_CURSOR | DISPLAY_SHIFT_SHIFT_RIGHT;
+	write_instruction(display_shift);
+	set_cursor(0,0);
+	
+	status = STATUS_OK;
+	
+	return(status); 
 
 }

@@ -13,6 +13,10 @@
 
     #include <stdint.h>
 
+    // Адреса строк
+    #define ROLL0_ADDR 0x00
+    #define ROLL1_ADDR 0x40
+
     // Перечень команд
     #define CLEAR_DISPLAY_CLEAR_DISPLAY                     0x01
     #define RETURN_HOME_RETURN_HOME                         0x02
@@ -84,6 +88,7 @@
             uint8_t write_port (uint8_t value);
             uint8_t write_instruction (uint8_t instruction);
             uint8_t read_port (void);
+            uint8_t set_cursor (uint8_t roll, uint8_t column);
             uint8_t init (void);
             uint8_t clear_display (void);
             uint8_t return_home (void);
