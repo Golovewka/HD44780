@@ -298,3 +298,41 @@ uint8_t hd44780::init (void)
 	return(status); 
 
 }
+
+/*
+ * @brief Функция отчиски дисплея
+ *
+ * @return Состояние выполнения операции
+ * @retval STATUS_OK
+ * @retval STATUS_BUSY
+ */
+uint8_t hd44780::clear_display (void)
+{
+
+	uint8_t status = STATUS_BUSY;
+	write_instruction(CLEAR_DISPLAY_CLEAR_DISPLAY);
+	while(read_port() & 0x80);
+	status = STATUS_OK;
+
+	return(status);
+
+}
+
+/*
+ * @brief Функция возвращения курсора в начальное положение
+ * 
+ * @return состояние выполнения операции
+ * @retval STATUS_BUSY
+ * @retval STATUS_OK
+ */
+uint8_t hd44780::return_home (void)
+{
+
+	uint8_t status = STATUS_BUSY;
+	write_instruction(RETURN_HOME_RETURN_HOME);
+	while(read_port() & 0x80);
+	status = STATUS_OK;
+	
+	return(status);
+
+}
