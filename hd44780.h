@@ -1,11 +1,16 @@
 #ifndef HD44780_H_
 #define HD44780_H_
 
-    #define STATUS_IDLE    0x00
-    #define STATUS_OK      0x01
-    #define STATUS_ERROR   0x02
-    #define STATUS_BUSY    0x03
-    #define STATUS_TIMEOUT 0x04
+    typedef enum
+    {
+
+        STATUS_IDLE = 0x00U,
+        STATUS_OK = 0x01U,
+        STATUS_ERROR = 0x02U,
+        STATUS_BUSY = 0x03U,
+        STATUS_TIMEOUT = 0x04U
+
+    } status_t;
     
     #warning "Change the values 'pin_t' and 'port_t' according to the system you are using"
     typedef uint8_t pin_t; 

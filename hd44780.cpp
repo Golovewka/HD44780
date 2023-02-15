@@ -336,3 +336,19 @@ uint8_t hd44780::return_home (void)
 	return(status);
 
 }
+
+/*
+ * @brief Функция установки направления движения курсора
+ *
+ * @param direction напрвление движения курсора
+ * 
+ * @return состояние выполнения функции
+ * @retval STATUS_OK
+ * @retval STATUS_ERROR 
+ */
+uint8_t hd44780::set_cursor_move_direction (uint8_t direction)
+{
+
+
+
+}
